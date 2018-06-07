@@ -2,7 +2,7 @@
 ; Author: Ege Balcı <ege.balci[at]invictuseurope[dot]com>
 ; Compatible: Windows 10/8.1/8/7/2008/Vista/2003/XP/2000/NT4
 ; Version: 1.0 (25 January 2018)
-; Size: 166 bytes
+; Size: 172 bytes
 ;-----------------------------------------------------------------------------;
 
 ; This block hooks the API functions by locating the addresses of API functions from import address table with given ror(13) hash value.
@@ -23,7 +23,9 @@ set_essentials:
   	pushad                 	; We preserve all the registers for the caller, bar EAX and ECX.
   	xor eax,eax           	; Zero EAX (upper 3 bytes will remain zero until function is found)
   	mov edx,[fs:eax+0x30] 	; Get a pointer to the PEB
-  	mov edx,[edx+0x08]      ; Get PEB->ImageBaseAddress
+	mov edx,[edx+0x0C]		; Get PEB->Ldr	
+	mov edx,[edx+0x14]		; Get the first module from the InMemoryOrder module list
+	mov edx,[edx+0x10]		; Get this modules base address
 	push edx				; Save the image base to stack (will use this alot)
   	add edx,[edx+0x3C]     	; "PE" Header
 	mov edx,[edx+0x80]		; Import table RVA

@@ -8,7 +8,7 @@ It finds the addresses of API functions by parsing the `_IMAGE_IMPORT_DESCRIPTOR
 
 <strong>IMPORTANT !!</strong> 
 - The function that is called with hook_api must be imported by the PE file or it will crash.
-- Target process must not use ASLR or else block couldn't find the import table address.
+- Currently it can only be run inside 32 bit processes.
 
 ## Example
 
